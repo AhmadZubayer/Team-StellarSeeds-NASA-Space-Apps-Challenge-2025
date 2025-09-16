@@ -69,6 +69,31 @@
         <div id="chatMessages" class="chat-messages daisyui-chat daisyui-chat-start"></div>
     </div>
     
+    <!-- Suggestions Section - Positioned above text input -->
+    <div id="suggestions" class="suggestions-container" style="position:fixed;bottom:140px;left:0;right:0;max-width:500px;margin:auto;background:white;padding:12px 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;z-index:999;">
+        <div class="flex items-center mb-2">
+            <i class="fas fa-lightbulb text-green-600 mr-2"></i>
+            <span class="text-sm font-medium text-green-700">Suggested Questions</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to protect crops from flood">
+                🌊 Protect crops from flood
+            </button>
+            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to improve soil fertility">
+                🌱 Improve soil fertility
+            </button>
+            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to save water in farming">
+                💧 Save water in farming
+            </button>
+            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to manage drought">
+                ☀️ Manage drought
+            </button>
+            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to prevent crop diseases">
+                🦠 Prevent crop diseases
+            </button>
+        </div>
+    </div>
+    
     <!-- Mobile Navigation Bar (at bottom like home/learn pages) -->
     <nav class="mobile-nav">
         <div class="grid grid-cols-6 h-full">

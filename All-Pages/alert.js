@@ -142,10 +142,10 @@ const alertDetails = {
             • Which alerts are most valuable to you?<br>
             • Any suggestions for improvement?<br><br>
             
-            <strong>🎯 Feedback Options:</strong><br>
-            • Use the in-app feedback form<br>
-            • Email us at: feedback@geoguardian.com<br>
-            • Call our support line: +880-800-123-456<br><br>
+            <strong>👨‍💻 Developer Contact:</strong><br>
+            • Team: StellarSeeds<br>
+            • Phone: 01842823300<br>
+            • Email: ahmadzubayer007@gmail.com<br><br>
             
             <strong>🏆 Rewards Program:</strong><br>
             Share feedback and get points that can be redeemed for:<br>

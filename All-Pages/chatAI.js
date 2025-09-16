@@ -40,6 +40,37 @@ chatForm.addEventListener('submit', function(e) {
         addMessage(getBotAnswer(userText), 'bot');
     }, 600);
     chatInput.value = '';
+    hideSuggestions();
+});
+
+// Handle suggestion button clicks
+function handleSuggestionClick(question) {
+    chatInput.value = question;
+    addMessage(question, 'user');
+    setTimeout(() => {
+        addMessage(getBotAnswer(question), 'bot');
+    }, 600);
+    chatInput.value = '';
+    hideSuggestions();
+}
+
+// Hide suggestions after first interaction
+function hideSuggestions() {
+    const suggestions = document.getElementById('suggestions');
+    if (suggestions) {
+        suggestions.style.display = 'none';
+    }
+}
+
+// Add event listeners for suggestion buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+    suggestionBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const question = this.getAttribute('data-question');
+            handleSuggestionClick(question);
+        });
+    });
 });
 
 // Navigation functionality
