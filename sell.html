@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGuardian - Sell</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #f8f9fa; 
+            min-height: 100vh; 
+            padding-bottom: 80px; 
+        }
+        
+        /* Top Header Section */
+        .top-header {
+            position: relative;
+            z-index: 10;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .greeting-text {
+            color: #1f2937 !important;
+        }
+
+        .location-text {
+            color: #6b7280 !important;
+        }
+
+        .profile-icon {
+            background: #f3f4f6 !important;
+            cursor: pointer;
+        }
+
+        .profile-icon i {
+            color: #6b7280 !important;
+        }
+
+        /* Mobile Navigation Bar */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 12px 0 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #22c55e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px 4px;
+            border-radius: 12px;
+            min-height: 60px;
+        }
+
+        .nav-item:hover {
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: rgba(34, 197, 94, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 0;
+            margin-bottom: 80px;
+            background: white;
+        }
+
+        .sell-container {
+            padding: 20px;
+        }
+
+        /* Post Crop Button */
+        .post-crop-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            width: 100%;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .post-crop-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Marketplace Cards */
+        .marketplace-feed {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+        }
+
+        .crop-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .crop-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .crop-info {
+            flex: 1;
+        }
+
+        .crop-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .crop-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #22c55e;
+            margin-bottom: 4px;
+        }
+
+        .seller-info {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .contact-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .contact-btn:hover {
+            background: #16a34a;
+        }
+
+        /* Price Trends Section */
+        .price-trends {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+
+        .chart-placeholder {
+            height: 120px;
+            background: linear-gradient(135deg, #e5f7f0, #a7f3d0);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #059669;
+            font-weight: 600;
+        }
+
+        /* Smart Recommendations */
+        .smart-recommendations {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .recommendations-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .recommendations-text {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        /* Post Crop Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 20px;
+        }
+
+        .popup-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f2937;
+            flex: 1;
+        }
+
+        .close-popup {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            min-height: 80px;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            background: #f9fafb;
+            color: #6b7280;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .file-input-display:hover {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            color: #22c55e;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header Section -->
+    <div class="top-header p-4 mb-6">
+        <div class="flex items-center justify-between">
+            <!-- Left side: Title -->
+            <div>
+                <h1 class="text-xl font-bold text-gray-800">Sell Your Crops</h1>
+            </div>
+
+            <!-- Right side: Profile Icon -->
+            <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern Search Bar -->
+    <div class="px-4 mb-6">
+        <div class="relative max-w-md mx-auto">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                <i class="fas fa-search text-green-500 text-lg"></i>
+            </div>
+            <input type="text" 
+                   class="w-full py-4 pl-12 pr-4 text-gray-700 bg-white rounded-full border-2 border-green-100 focus:border-green-400 focus:outline-none focus:ring-4 focus:ring-green-100 shadow-lg transition-all duration-300 placeholder-gray-400" 
+                   placeholder="Search crops, sellers, prices..." />
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="sell-container">
+            <!-- Post Crop Button -->
+            <button class="post-crop-btn" onclick="postCrop()">
+                <i class="fas fa-plus mr-3"></i>
+                Post Your Crop
+            </button>
+
+            <!-- Marketplace Feed -->
+            <div class="marketplace-feed">
+                <!-- Crop Card 1 -->
+                <div class="crop-card">
+                    <div class="crop-image">
+                        <i class="fas fa-seedling text-green-500 text-2xl"></i>
+                    </div>
+                    <div class="crop-info">
+                        <div class="crop-name">Premium Rice</div>
+                        <div class="crop-price">৳45/kg</div>
+                        <div class="seller-info">Farmer Rahman • Sylhet</div>
+                    </div>
+                    <button class="contact-btn" onclick="contactSeller('Rahman')">Contact</button>
+                </div>
+
+                <!-- Crop Card 2 -->
+                <div class="crop-card">
+                    <div class="crop-image">
+                        <i class="fas fa-corn text-yellow-500 text-2xl"></i>
+                    </div>
+                    <div class="crop-info">
+                        <div class="crop-name">Sweet Corn</div>
+                        <div class="crop-price">৳35/kg</div>
+                        <div class="seller-info">Farmer Ali • Rangpur</div>
+                    </div>
+                    <button class="contact-btn" onclick="contactSeller('Ali')">Contact</button>
+                </div>
+
+                <!-- Crop Card 3 -->
+                <div class="crop-card">
+                    <div class="crop-image">
+                        <i class="fas fa-carrot text-orange-500 text-2xl"></i>
+                    </div>
+                    <div class="crop-info">
+                        <div class="crop-name">Fresh Vegetables</div>
+                        <div class="crop-price">৳25/kg</div>
+                        <div class="seller-info">Farmer Fatima • Chittagong</div>
+                    </div>
+                    <button class="contact-btn" onclick="contactSeller('Fatima')">Contact</button>
+                </div>
+
+                <!-- Crop Card 4 -->
+                <div class="crop-card">
+                    <div class="crop-image">
+                        <i class="fas fa-apple-alt text-red-500 text-2xl"></i>
+                    </div>
+                    <div class="crop-info">
+                        <div class="crop-name">Organic Fruits</div>
+                        <div class="crop-price">ৃ60/kg</div>
+                        <div class="seller-info">Farmer Hassan • Dhaka</div>
+                    </div>
+                    <button class="contact-btn" onclick="contactSeller('Hassan')">Contact</button>
+                </div>
+            </div>
+
+            <!-- Price Trends Section -->
+            <div class="price-trends">
+                <h3 class="text-lg font-bold text-gray-800 mb-3">Price Trends</h3>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Smart Recommendations -->
+            <div class="smart-recommendations">
+                <div class="recommendations-title">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    Smart Recommendations
+                </div>
+                <div class="recommendations-text">
+                    Best time to sell: Next 5 days<br>
+                    High demand in Dhaka region<br>
+                    Rice prices expected to rise 8%
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+        <div class="grid grid-cols-6 h-full">
+            <!-- Home -->
+            <a href="home.html" class="nav-item" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+
+            <!-- Learn -->
+            <a href="learn.html" class="nav-item" data-page="learn">
+                <i class="fas fa-book"></i>
+                <span>Learn</span>
+            </a>
+
+            <!-- Chat AI -->
+            <a href="chatAI.html" class="nav-item" data-page="chat">
+                <i class="fas fa-robot"></i>
+                <span>Chat AI</span>
+            </a>
+
+            <!-- Calendar -->
+            <a href="crop-calendar.html" class="nav-item" data-page="calendar">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Calendar</span>
+            </a>
+
+            <!-- Sell -->
+            <a href="sell.html" class="nav-item active" data-page="sell">
+                <i class="fas fa-store"></i>
+                <span>Sell</span>
+            </a>
+
+            <!-- Alerts -->
+            <a href="#" class="nav-item" data-page="alerts">
+                <i class="fas fa-bell"></i>
+                <span>Alerts</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Post Crop Popup -->
+    <div id="postCropPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2 class="popup-title">Post Your Crop</h2>
+                <button class="close-popup" onclick="closePostCropPopup()">&times;</button>
+            </div>
+            
+            <form id="postCropForm" onsubmit="submitCropPost(event)">
+                <!-- Crop Name -->
+                <div class="form-group">
+                    <label class="form-label">Crop Name</label>
+                    <input type="text" class="form-input" id="cropName" placeholder="e.g., Premium Rice" required>
+                </div>
+
+                <!-- Details -->
+                <div class="form-group">
+                    <label class="form-label">Details</label>
+                    <textarea class="form-textarea" id="cropDetails" placeholder="Describe your crop quality, variety, organic status, etc." required></textarea>
+                </div>
+
+                <!-- Quantity -->
+                <div class="form-group">
+                    <label class="form-label">Quantity</label>
+                    <input type="text" class="form-input" id="cropQuantity" placeholder="e.g., 100 kg, 5 tons" required>
+                </div>
+
+                <!-- Asking Price -->
+                <div class="form-group">
+                    <label class="form-label">Asking Price</label>
+                    <input type="text" class="form-input" id="cropPrice" placeholder="e.g., ৳45/kg" required>
+                </div>
+
+                <!-- Pictures -->
+                <div class="form-group">
+                    <label class="form-label">Add Pictures</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" class="file-input" id="cropImages" multiple accept="image/*">
+                        <div class="file-input-display">
+                            <i class="fas fa-camera mr-2"></i>
+                            Click to select images
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-check mr-2"></i>
+                    Post Crop
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Centralized Navigation System -->
+    <script src="navigation.js"></script>
+    <script src="sell.js"></script>
+</body>
+</html>

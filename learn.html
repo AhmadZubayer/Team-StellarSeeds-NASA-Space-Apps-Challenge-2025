@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GeoGuardian - Learn</title>
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		body { font-family: 'Inter', sans-serif; background: #f8f9fa; min-height: 100vh; padding-bottom: 80px; }
+		.top-header { position: relative; z-index: 10; background: white; border-bottom: 1px solid #e5e7eb; }
+		.greeting-text { color: #1f2937 !important; }
+		.location-text { color: #6b7280 !important; }
+		.profile-icon { background: #f3f4f6 !important; cursor: pointer; }
+		.profile-icon i { color: #6b7280 !important; }
+		.mobile-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15); z-index: 1000; padding: 12px 0 8px 0; }
+		.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #22c55e; text-decoration: none; transition: all 0.3s ease; padding: 8px 4px; border-radius: 12px; min-height: 60px; }
+		.nav-item:hover { background: rgba(34, 197, 94, 0.1); transform: translateY(-2px); }
+		.nav-item.active { background: rgba(34, 197, 94, 0.2); transform: translateY(-2px); }
+		.nav-item i { font-size: 20px; margin-bottom: 4px; }
+		.nav-item span { font-size: 12px; font-weight: 500; }
+		.main-content { padding: 0; margin-bottom: 80px; background: white; }
+		.learn-section { padding: 20px; }
+		.video-row { display: flex; gap: 20px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap; }
+		.video-row iframe { border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+		.button-row { display: flex; gap: 16px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+		.learn-btn { background: #22c55e; color: white; border: none; border-radius: 12px; padding: 12px 32px; font-size: 1rem; font-weight: 600; box-shadow: 0 2px 8px rgba(34,197,94,0.08); transition: background 0.2s; cursor: pointer; }
+		.learn-btn:hover { background: #16a34a; }
+		.quiz-section { background: #f3f4f6; border-radius: 16px; padding: 24px; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+		.quiz-section h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; color: #22c55e; }
+		.quiz-question { font-size: 1rem; margin-bottom: 12px; }
+		.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+		.quiz-option { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 16px; cursor: pointer; transition: background 0.2s; }
+		.quiz-option:hover { background: #d1fae5; }
+		.quiz-result { font-size: 1rem; font-weight: 600; color: #16a34a; margin-top: 10px; }
+	</style>
+</head>
+<body>
+	<!-- Top Header Section -->
+	<div class="top-header p-4 mb-6">
+		<div class="flex items-center justify-between">
+			<div>
+				<h1 class="text-2xl font-bold text-green-600">Learn</h1>
+			</div>
+			<div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center">
+				<i class="fas fa-user text-xl"></i>
+			</div>
+		</div>
+	</div>
+	<!-- Modern Search Bar -->
+	<div class="px-4 mb-6">
+		<div class="relative max-w-md mx-auto">
+			<div class="absolute inset-y-0 left-0 flex items-center pl-4">
+				<i class="fas fa-search text-green-500 text-lg"></i>
+			</div>
+			<input type="text" 
+				   class="w-full py-4 pl-12 pr-4 text-gray-700 bg-white rounded-full border-2 border-green-100 focus:border-green-400 focus:outline-none focus:ring-4 focus:ring-green-100 shadow-lg transition-all duration-300 placeholder-gray-400" 
+				   placeholder="Search learning resources, videos..." />
+		</div>
+	</div>
+	<!-- Main Content -->
+	<div class="main-content">
+		<div class="learn-section">
+			<!-- Quiz Section at Top -->
+			<div class="quiz-section" style="margin-bottom: 32px;">
+				<h3>Quiz: Flood Safety</h3>
+				<div class="quiz-question" id="quizQuestion" style="cursor:pointer;">What is the best way to protect crops from flood damage?</div>
+				<div id="quizResult" class="quiz-result"></div>
+			</div>
+			<!-- Video Section (2-column layout) -->
+			<div style="margin-bottom: 32px;">
+				<h2 style="font-size:1.3rem;font-weight:700;margin-bottom:18px;color:#222;">How to Prepare for Flood?</h2>
+				<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;background:#f3f4f6;padding:18px 12px;border-radius:16px;align-items:start;">
+					<div style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;align-items:center;padding-bottom:10px;">
+						<iframe width="100%" height="140" src="https://www.youtube.com/embed/I3IOUzWU2oY?si=wwqbbDPn25CSHX7o" title="How to Build Farm Drainage Channels for Flood Protection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius:12px 12px 0 0;"></iframe>
+						<div style="font-size:0.98rem;font-weight:500;margin-top:8px;text-align:center;padding:0 8px;">How to Build Farm Drainage Channels for Flood Protection</div>
+					</div>
+					<div style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;align-items:center;padding-bottom:10px;">
+						<iframe width="100%" height="140" src="https://www.youtube.com/embed/aDxyO0WyT5k?si=Mo6-fld2Q1QBAJfl" title="Step-by-Step Guide: Constructing Irrigation Trenches in Your Field" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius:12px 12px 0 0;"></iframe>
+						<div style="font-size:0.98rem;font-weight:500;margin-top:8px;text-align:center;padding:0 8px;">Step-by-Step Guide: Constructing Irrigation Trenches in Your Field</div>
+					</div>
+				</div>
+				<div style="margin-top:10px;margin-bottom:18px;text-align:left;">
+					<a href="#" style="color:#22c55e;font-weight:600;text-decoration:underline;font-size:0.98rem;">View More Tutorials &gt;</a>
+				</div>
+			</div>
+			<!-- Categories Section -->
+			<div style="margin-bottom:32px;">
+				<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+					<h2 style="font-size:1.15rem;font-weight:700;color:#222;">Categories</h2>
+					<a href="#" style="color:#22c55e;font-weight:500;font-size:0.95rem;text-decoration:underline;">View More Categories &gt;</a>
+				</div>
+				<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Drought Management')">
+						<i class="fas fa-sun" style="font-size:2rem;color:#059669;"></i>
+						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Drought Management</div>
+					</div>
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Heavy Rain Management')">
+						<i class="fas fa-cloud-showers-heavy" style="font-size:2rem;color:#059669;"></i>
+						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Heavy Rain Management</div>
+					</div>
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Soil and Fertility Management')">
+						<i class="fas fa-seedling" style="font-size:2rem;color:#059669;"></i>
+						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Soil & Fertility Management</div>
+					</div>
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Water Reservation Techniques')">
+						<i class="fas fa-tint" style="font-size:2rem;color:#059669;"></i>
+						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Water Reservation Techniques</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Mobile Navigation Bar -->
+	<nav class="mobile-nav">
+		<div class="grid grid-cols-6 h-full">
+			<a href="home.html" class="nav-item" data-page="home">
+				<i class="fas fa-home"></i>
+				<span>Home</span>
+			</a>
+			<a href="learn.html" class="nav-item active" data-page="learn">
+				<i class="fas fa-book"></i>
+				<span>Learn</span>
+			</a>
+			<a href="chatAI.html" class="nav-item" data-page="chat">
+				<i class="fas fa-robot"></i>
+				<span>Chat AI</span>
+			</a>
+			<a href="crop-calendar.html" class="nav-item" data-page="calendar">
+				<i class="fas fa-calendar-alt"></i>
+				<span>Calendar</span>
+			</a>
+			<a href="sell.html" class="nav-item" data-page="sell">
+				<i class="fas fa-store"></i>
+				<span>Sell</span>
+			</a>
+			<a href="alerts.html" class="nav-item" data-page="alerts">
+				<i class="fas fa-bell"></i>
+				<span>Alerts</span>
+			</a>
+		</div>
+	</nav>
+	<!-- Profile Popup Menu -->
+	<div id="profilePopup" class="profile-popup fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+		<div class="popup-content absolute top-16 right-4 bg-white rounded-2xl shadow-2xl p-6 w-80 transform transition-all duration-300 scale-95 opacity-0">
+			<div class="flex items-center justify-between mb-6">
+				<h3 class="text-xl font-bold text-gray-800">Profile</h3>
+				<button id="closeProfilePopup" class="text-gray-400 hover:text-gray-600 transition-colors">
+					<i class="fas fa-times text-xl"></i>
+				</button>
+			</div>
+			<div class="mb-6">
+				<div class="flex items-center mb-4">
+					<div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+						<i class="fas fa-user text-green-600 text-2xl"></i>
+					</div>
+					<div>
+						<div id="popupUserName" class="font-bold text-lg text-gray-800">Shihab Chashi</div>
+						<div class="text-sm text-gray-500">Farmer</div>
+					</div>
+				</div>
+				<div class="mb-4">
+					<div class="flex items-center text-gray-600 mb-2">
+						<i class="fas fa-map-marker-alt text-green-500 w-5 mr-2"></i>
+						<span class="font-medium">Location:</span>
+					</div>
+					<div id="popupCityName" class="text-gray-800 ml-7">Loading...</div>
+				</div>
+				<div class="mb-4">
+					<div class="flex items-center text-gray-600 mb-2">
+						<i class="fas fa-seedling text-green-500 w-5 mr-2"></i>
+						<span class="font-medium">Preferred Crops:</span>
+					</div>
+					<div class="ml-7">
+						<div class="flex flex-wrap gap-2">
+							<span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Rice</span>
+							<span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Wheat</span>
+							<span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Corn</span>
+						</div>
+					</div>
+				</div>
+				<div class="mb-6">
+					<div class="flex items-center text-gray-600 mb-2">
+						<i class="fas fa-info-circle text-green-500 w-5 mr-2"></i>
+						<span class="font-medium">Details:</span>
+					</div>
+					<div class="text-gray-600 text-sm ml-7">Experienced farmer specializing in sustainable agriculture practices. Member since 2024.</div>
+				</div>
+			</div>
+			<div class="space-y-3">
+				<button id="editProfileBtn" class="w-full btn btn-outline btn-success flex items-center justify-center">
+					<i class="fas fa-edit mr-2"></i>
+					Edit Profile
+				</button>
+				<button id="logoutBtn" class="w-full btn btn-error text-white flex items-center justify-center">
+					<i class="fas fa-sign-out-alt mr-2"></i>
+					Log Out
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- Quiz JS, Popup, and Google Search -->
+	<style>
+		.quiz-popup-bg { position: fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; display:none; align-items:center; justify-content:center; }
+		.quiz-popup { background:white; border-radius:16px; box-shadow:0 2px 24px rgba(34,197,94,0.15); padding:32px 24px; max-width:350px; width:90vw; }
+		.quiz-popup h4 { font-size:1.1rem; font-weight:700; margin-bottom:18px; color:#22c55e; }
+		.quiz-popup .quiz-options { display:flex; flex-direction:column; gap:12px; }
+		.quiz-popup .quiz-option { background:#f3f4f6; border-radius:8px; padding:10px 16px; cursor:pointer; border:none; font-size:1rem; transition:background 0.2s; }
+		.quiz-popup .quiz-option:hover { background:#d1fae5; }
+		.quiz-popup .close-btn { background:none; border:none; color:#888; font-size:1.2rem; position:absolute; top:18px; right:24px; cursor:pointer; }
+	</style>
+	<div id="quizPopupBg" class="quiz-popup-bg">
+		<div class="quiz-popup" style="position:relative;">
+			<button class="close-btn" onclick="closeQuizPopup()">&times;</button>
+			<h4>Choose the correct answer:</h4>
+			<div class="quiz-options">
+				<button class="quiz-option" onclick="showQuizResult(false)">Leave crops as they are</button>
+				<button class="quiz-option" onclick="showQuizResult(true)">Use raised beds</button>
+				<button class="quiz-option" onclick="showQuizResult(false)">Plant more seeds</button>
+				<button class="quiz-option" onclick="showQuizResult(false)">Water crops daily</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		// Show popup when question is clicked
+		document.getElementById('quizQuestion').onclick = function() {
+			document.getElementById('quizPopupBg').style.display = 'flex';
+			document.getElementById('quizResult').textContent = '';
+		};
+		function closeQuizPopup() {
+			document.getElementById('quizPopupBg').style.display = 'none';
+		}
+		function showQuizResult(isCorrect) {
+			const result = document.getElementById('quizResult');
+			if (isCorrect) {
+				result.textContent = 'Correct! Raised beds help protect crops from flood damage.';
+				result.style.color = '#16a34a';
+			} else {
+				result.textContent = 'Incorrect. Try again!';
+				result.style.color = '#dc2626';
+			}
+			closeQuizPopup();
+		}
+		function searchGoogle(query) {
+			window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+		}
+	</script>
+	<!-- Centralized Navigation System -->
+	<script src="navigation.js"></script>
+	<script src="learn.js"></script>
+	<script>
+		// Remove old navigation override since we have centralized navigation
+		document.addEventListener('DOMContentLoaded', function() {
+			console.log('Learn page loaded with centralized navigation');
+		});
+	</script>
+</body>
+</html>
