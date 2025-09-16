@@ -2,6 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Location.js loaded and ready');
 
+    // Request location on page load (mobile-friendly)
+    requestUserLocation();
+
     // Initialize DOM elements
     initializeLocationPage();
 });
@@ -42,6 +45,85 @@ function initializeLocationPage() {
 
     // Additional DOM manipulation
     enhanceUserInterface();
+    
+    // Ensure continue button is visible
+    ensureContinueButtonVisible();
+}
+
+// Ensure continue button is always visible
+function ensureContinueButtonVisible() {
+    const continueBtn = document.getElementById('continueBtn');
+    if (continueBtn) {
+        continueBtn.classList.add('show');
+        continueBtn.style.opacity = '1';
+    }
+}
+
+// Mobile-friendly geolocation detection
+function requestUserLocation() {
+    const locationStatus = document.getElementById('locationStatus');
+    if (locationStatus) {
+        locationStatus.innerText = 'Requesting location...';
+    }
+
+    if (!navigator.geolocation) {
+        showMessage('Geolocation not supported on this device', 'error');
+        if (locationStatus) locationStatus.innerText = 'Geolocation not supported.';
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            window.userLocation = [latitude, longitude];
+            localStorage.setItem('geoguardian_location', JSON.stringify({
+                latitude,
+                longitude,
+                timestamp: new Date().toISOString(),
+                page: 'location'
+            }));
+            showMessage('Location detected!', 'success');
+            if (locationStatus) locationStatus.innerText = `Location: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+            
+            // Hide loading spinner
+            hideLoadingSpinner();
+        },
+        function(error) {
+            let errorMessage = 'Location unavailable';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = 'Location access denied. Tap to retry.';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = 'Location unavailable.';
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = 'Location request timed out.';
+                    break;
+            }
+            showMessage(errorMessage, 'error');
+            if (locationStatus) {
+                locationStatus.innerHTML = `<span style="color:#ef4444;cursor:pointer;" onclick="requestUserLocation()">${errorMessage}</span>`;
+            }
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 300000
+        }
+    );
+}
+
+// Hide loading spinner
+function hideLoadingSpinner() {
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    if (loadingSpinner) {
+        loadingSpinner.classList.add('hide');
+        setTimeout(() => {
+            loadingSpinner.style.display = 'none';
+        }, 300);
+    }
 }
 
 function navigateToHome() {
