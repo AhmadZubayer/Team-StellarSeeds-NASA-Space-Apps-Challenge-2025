@@ -38,24 +38,102 @@ function loadCityName() {
         return;
     }
 
-    // Try to get location data from localStorage (set by location page)
+    // Try to get location data from localStorage first
     const locationData = localStorage.getItem('geoguardian_location');
 
     if (locationData) {
         try {
             const parsedData = JSON.parse(locationData);
             console.log('Location data found:', parsedData);
-
-            // Use reverse geocoding to get city name from coordinates
             getCityFromCoordinates(parsedData.latitude, parsedData.longitude);
+            return;
         } catch (error) {
             console.error('Error parsing location data:', error);
-            cityNameElement.innerText = 'Location unavailable';
         }
-    } else {
-        console.log('No location data found in localStorage');
-        cityNameElement.innerText = 'Location not set';
     }
+
+    // If no stored location, try to get current location (mobile-friendly)
+    console.log('No stored location, attempting to get current location...');
+    getCurrentLocationMobile();
+}
+
+function getCurrentLocationMobile() {
+    const cityNameElement = document.getElementById('cityName');
+    
+    // Check if geolocation is supported
+    if (!navigator.geolocation) {
+        console.error('Geolocation not supported');
+        cityNameElement.innerText = 'Location not supported';
+        return;
+    }
+
+    cityNameElement.innerText = 'Getting location...';
+
+    // Mobile-optimized geolocation options
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 15000, // 15 seconds timeout
+        maximumAge: 300000 // Accept cached location up to 5 minutes old
+    };
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            
+            console.log('Location obtained:', { latitude, longitude });
+            
+            // Store location for future use
+            localStorage.setItem('geoguardian_location', JSON.stringify({
+                latitude: latitude,
+                longitude: longitude,
+                timestamp: Date.now()
+            }));
+            
+            // Get city name
+            getCityFromCoordinates(latitude, longitude);
+        },
+        function(error) {
+            console.error('Geolocation error:', error);
+            
+            let errorMessage = 'Location unavailable';
+            
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = 'Location access denied';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = 'Location unavailable';
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = 'Location timeout';
+                    break;
+                default:
+                    errorMessage = 'Location error';
+                    break;
+            }
+            
+            cityNameElement.innerText = errorMessage;
+            
+            // Show permission prompt for mobile users
+            if (error.code === error.PERMISSION_DENIED) {
+                setTimeout(() => {
+                    cityNameElement.innerHTML = '<span style="color: #ef4444; cursor: pointer;" onclick="promptLocationPermission()">📍 Enable Location</span>';
+                }, 2000);
+            }
+        },
+        options
+    );
+}
+
+function promptLocationPermission() {
+    const cityNameElement = document.getElementById('cityName');
+    cityNameElement.innerText = 'Please allow location access';
+    
+    // Try again after a short delay
+    setTimeout(() => {
+        getCurrentLocationMobile();
+    }, 1000);
 }
 
 async function getCityFromCoordinates(lat, lng) {
@@ -64,27 +142,58 @@ async function getCityFromCoordinates(lat, lng) {
     try {
         cityNameElement.innerText = 'Loading location...';
 
-        // Use Nominatim API (free) to get city name
-        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1`);
+        // Use Nominatim API with mobile-friendly timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1`,
+            { 
+                signal: controller.signal,
+                headers: {
+                    'User-Agent': 'GeoGuardian-Mobile-App'
+                }
+            }
+        );
+        
+        clearTimeout(timeoutId);
         const data = await response.json();
 
         if (data && data.address) {
-            // Extract city name (try different address components)
+            // Extract city name with better fallbacks
             const city = data.address.city ||
                         data.address.town ||
                         data.address.village ||
+                        data.address.municipality ||
                         data.address.county ||
+                        data.address.state_district ||
                         data.address.state ||
                         'Unknown Location';
 
-            cityNameElement.innerText = city;
+            cityNameElement.innerText = `📍 ${city}`;
             console.log('City name set to:', city);
+            
+            // Store the city name for offline use
+            localStorage.setItem('geoguardian_last_city', city);
         } else {
-            cityNameElement.innerText = 'City not found';
+            // Try to use last known city
+            const lastCity = localStorage.getItem('geoguardian_last_city');
+            if (lastCity) {
+                cityNameElement.innerText = `📍 ${lastCity}`;
+            } else {
+                cityNameElement.innerText = '📍 Location found';
+            }
         }
     } catch (error) {
         console.error('Error getting city name:', error);
-        cityNameElement.innerText = 'Location error';
+        
+        // Try to use last known city
+        const lastCity = localStorage.getItem('geoguardian_last_city');
+        if (lastCity) {
+            cityNameElement.innerText = `📍 ${lastCity}`;
+        } else {
+            cityNameElement.innerHTML = '<span style="color: #ef4444; cursor: pointer;" onclick="getCurrentLocationMobile()">📍 Retry Location</span>';
+        }
     }
 }
 
