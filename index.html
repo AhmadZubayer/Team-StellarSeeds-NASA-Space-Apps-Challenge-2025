@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoGuardian - Smart Farming Solution</title>
+    <meta http-equiv="refresh" content="0; URL=register.html">
+    <link rel="canonical" href="register.html">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .loading-container {
+            max-width: 400px;
+            padding: 2rem;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 2.8rem;
+        }
+        .loading-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fallback-link {
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+        .fallback-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="loading-container">
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            GeoGuardian
+        </div>
+        <div class="loading-text">
+            Initializing your smart farming experience...
+        </div>
+        <div class="spinner"></div>
+        <a href="register.html" class="fallback-link">
+            <i class="fas fa-arrow-right"></i> Continue to Registration
+        </a>
+    </div>
+
+    <script>
+        // Redirect immediately
+        window.location.href = 'register.html';
+        
+        // Fallback redirect after 2 seconds in case the immediate redirect fails
+        setTimeout(function() {
+            if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+                window.location.href = 'register.html';
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
