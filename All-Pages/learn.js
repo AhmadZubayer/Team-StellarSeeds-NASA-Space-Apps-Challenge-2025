@@ -1,25 +1,18 @@
-// learn.js - DOM manipulation for learn page
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Learn.js loaded and ready');
 
-    // Initialize the learn page
     initializeLearnPage();
 });
 
 function initializeLearnPage() {
-    // Add navigation functionality
     setupNavigation();
 
-    // Add profile icon interaction
     setupProfileInteraction();
 
-    // Add video interactions
     setupVideoInteractions();
 
-    // Add category card interactions
     setupCategoryInteractions();
 
-    // Add quiz functionality
     setupQuizFunctionality();
 }
 
@@ -31,11 +24,8 @@ function setupNavigation() {
             const page = this.getAttribute('data-page');
             const href = this.getAttribute('href');
 
-            // Let the browser handle navigation naturally for all pages
             console.log('Navigation clicked:', page, 'href:', href);
             
-            // Don't prevent default - let normal navigation work
-            // The href attributes will handle the navigation
         });
     });
 }
@@ -45,7 +35,6 @@ function handleNavigation(page) {
 
     switch(page) {
         case 'learn':
-            // Already on learn page
             break;
         case 'chat':
             window.location.href = 'chatAI.html';
@@ -115,7 +104,6 @@ function setupProfileInteraction() {
         });
     }
 
-    // Close popup when clicking outside
     if (profilePopup) {
         profilePopup.addEventListener('click', function(event) {
             if (event.target === profilePopup) {
@@ -136,14 +124,12 @@ function setupVideoInteractions() {
             console.log('Video clicked:', title);
             showMessage('Opening video tutorial...', 'info');
 
-            // Add visual feedback
             this.style.transform = 'scale(0.98)';
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 150);
         });
 
-        // Add hover effects
         video.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.02)';
             this.style.transition = 'transform 0.2s ease';
@@ -154,7 +140,6 @@ function setupVideoInteractions() {
         });
     });
 
-    // Handle "View More Tutorials" link
     const viewMoreLink = document.querySelector('a[href="#"]');
     if (viewMoreLink && viewMoreLink.textContent.includes('View More Tutorials')) {
         viewMoreLink.addEventListener('click', function(event) {
@@ -214,17 +199,14 @@ function setupQuizFunctionality() {
         });
     }
 
-    // Close quiz popup
     if (closeQuizBtn) {
         closeQuizBtn.addEventListener('click', function() {
             hideQuizPopup();
         });
     }
 
-    // Quiz option selection
     quizOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Remove selected class from all options
             quizOptions.forEach(opt => {
                 opt.classList.remove('selected');
                 const radio = opt.querySelector('.w-4');
@@ -232,7 +214,6 @@ function setupQuizFunctionality() {
                 radio.style.borderColor = '#d1d5db';
             });
 
-            // Add selected class to clicked option
             this.classList.add('selected');
             const radio = this.querySelector('.w-4');
             radio.style.backgroundColor = '#3b82f6';
@@ -240,7 +221,6 @@ function setupQuizFunctionality() {
 
             selectedAnswer = this.getAttribute('data-answer');
 
-            // Enable submit button
             if (submitQuizBtn) {
                 submitQuizBtn.disabled = false;
                 submitQuizBtn.classList.remove('btn-disabled');
@@ -250,17 +230,14 @@ function setupQuizFunctionality() {
         });
     });
 
-    // Submit quiz answer
     if (submitQuizBtn) {
         submitQuizBtn.addEventListener('click', function() {
             if (!selectedAnswer) return;
 
             console.log('Submitting quiz answer:', selectedAnswer);
 
-            // Check if answer is correct
             const isCorrect = selectedAnswer === 'drainage-canals';
 
-            // Show result
             if (quizResult && quizResultText) {
                 quizResult.classList.remove('hidden');
 
@@ -291,7 +268,6 @@ function setupQuizFunctionality() {
         });
     }
 
-    // Close popup when clicking outside
     if (quizPopup) {
         quizPopup.addEventListener('click', function(event) {
             if (event.target === quizPopup) {
@@ -301,14 +277,12 @@ function setupQuizFunctionality() {
     }
 }
 
-// Function to show quiz popup
 function showQuizPopup() {
     const quizPopup = document.getElementById('quizPopup');
 
     if (quizPopup) {
         quizPopup.classList.remove('hidden');
 
-        // Trigger animation after a brief delay
         setTimeout(() => {
             quizPopup.classList.add('show');
         }, 10);
@@ -317,14 +291,12 @@ function showQuizPopup() {
     }
 }
 
-// Function to hide quiz popup
 function hideQuizPopup() {
     const quizPopup = document.getElementById('quizPopup');
 
     if (quizPopup) {
         quizPopup.classList.remove('show');
 
-        // Hide popup after animation completes
         setTimeout(() => {
             quizPopup.classList.add('hidden');
         }, 300);
@@ -333,13 +305,11 @@ function hideQuizPopup() {
     }
 }
 
-// Function to reset quiz state
 function resetQuiz() {
     const quizOptions = document.querySelectorAll('.quiz-option');
     const submitQuizBtn = document.getElementById('submitQuizAnswer');
     const quizResult = document.getElementById('quizResult');
 
-    // Reset all options
     quizOptions.forEach(option => {
         option.classList.remove('selected');
         const radio = option.querySelector('.w-4');
@@ -422,31 +392,25 @@ function handleLogout() {
     localStorage.removeItem('geoguardian_location');
     localStorage.removeItem('userSession');
 
-    // Show logout message
     showMessage('Logging out...', 'success');
 
-    // Redirect to register page after delay
     setTimeout(() => {
         window.location.href = 'register.html';
     }, 1500);
 }
 
-// Utility function to show messages
 function showMessage(message, type = 'info') {
-    // Create and show temporary message
     const messageDiv = document.createElement('div');
     messageDiv.className = `alert alert-${type} fixed top-20 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 max-w-sm`;
     messageDiv.textContent = message;
 
     document.body.appendChild(messageDiv);
 
-    // Animate in
     setTimeout(() => {
         messageDiv.style.opacity = '1';
         messageDiv.style.transform = 'translate(-50%, 0)';
     }, 100);
 
-    // Remove after delay
     setTimeout(() => {
         messageDiv.style.opacity = '0';
         messageDiv.style.transform = 'translate(-50%, -20px)';
@@ -458,7 +422,6 @@ function showMessage(message, type = 'info') {
     }, 3000);
 }
 
-// Export functions for potential use in other scripts
 window.LearnPageManager = {
     showProfilePopup,
     hideProfilePopup,

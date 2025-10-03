@@ -1,9 +1,3 @@
-/**
- * Universal Navigation System for GeoGuardian Farming App
- * This file handles navigation across all pages consistently
- */
-
-// Navigation configuration
 const NAVIGATION_CONFIG = {
     pages: {
         home: 'home.html',
@@ -17,7 +11,6 @@ const NAVIGATION_CONFIG = {
         const path = window.location.pathname;
         const filename = path.split('/').pop() || 'home.html';
         
-        // Map filenames to page keys
         const pageMap = {
             'home.html': 'home',
             'learn.html': 'learn',
@@ -25,7 +18,7 @@ const NAVIGATION_CONFIG = {
             'crop-calendar.html': 'calendar',
             'sell.html': 'sell',
             'alerts.html': 'alerts',
-            'alert.html': 'alerts' // Handle both alert.html and alerts.html
+            'alert.html': 'alerts'
         };
         
         return pageMap[filename] || 'home';
@@ -38,22 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
 });
 
-/**
- * Initialize the navigation system
- */
 function initializeNavigation() {
-    // Set up navigation event listeners
     setupNavigationListeners();
     
-    // Set active navigation state
     setActiveNavigation();
     
     console.log('Navigation setup complete');
 }
 
-/**
- * Set up event listeners for all navigation items
- */
 function setupNavigationListeners() {
     const navItems = document.querySelectorAll('.nav-item[data-page]');
     
@@ -63,13 +48,10 @@ function setupNavigationListeners() {
     }
     
     navItems.forEach(item => {
-        // Remove any existing event listeners
         item.removeEventListener('click', handleNavigationClick);
         
-        // Add new event listener
         item.addEventListener('click', handleNavigationClick);
         
-        // Add hover effects
         item.addEventListener('mouseenter', function() {
             if (!this.classList.contains('active')) {
                 this.style.transform = 'translateY(-2px)';
@@ -88,9 +70,6 @@ function setupNavigationListeners() {
     console.log(`Set up navigation listeners for ${navItems.length} items`);
 }
 
-/**
- * Handle navigation item clicks
- */
 function handleNavigationClick(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -101,42 +80,31 @@ function handleNavigationClick(event) {
     
     console.log(`Navigation clicked: ${targetPage} (current: ${currentPage})`);
     
-    // Don't navigate if we're already on the target page
     if (targetPage === currentPage) {
         console.log('Already on target page, no navigation needed');
         return;
     }
     
-    // Validate target page
     if (!NAVIGATION_CONFIG.pages[targetPage]) {
         console.error(`Unknown page: ${targetPage}`);
         return;
     }
     
-    // Update active states before navigation
     updateActiveNavigation(targetPage);
     
-    // Navigate to the target page
     const targetUrl = NAVIGATION_CONFIG.pages[targetPage];
     console.log(`Navigating to: ${targetUrl}`);
     
-    // Use timeout to allow visual feedback before navigation
     setTimeout(() => {
         window.location.href = targetUrl;
     }, 100);
 }
 
-/**
- * Set the active navigation state based on current page
- */
 function setActiveNavigation() {
     const currentPage = NAVIGATION_CONFIG.getCurrentPage();
     updateActiveNavigation(currentPage);
 }
 
-/**
- * Update active navigation state
- */
 function updateActiveNavigation(activePage) {
     const navItems = document.querySelectorAll('.nav-item[data-page]');
     
@@ -155,6 +123,72 @@ function updateActiveNavigation(activePage) {
     });
     
     console.log(`Active navigation set to: ${activePage}`);
+}
+
+function navigateToPage(pageName) {
+    if (!NAVIGATION_CONFIG.pages[pageName]) {
+        console.error(`Cannot navigate to unknown page: ${pageName}`);
+        return false;
+    }
+    
+    const targetUrl = NAVIGATION_CONFIG.pages[pageName];
+    console.log(`Programmatic navigation to: ${targetUrl}`);
+    
+    window.location.href = targetUrl;
+    return true;
+}
+
+function showPageTransition() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+    
+    overlay.innerHTML = `
+        <div class="text-center">
+            <div class="animate-spin inline-block w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mb-4"></div>
+            <p class="text-gray-600">Loading...</p>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+    }, 10);
+    
+    return overlay;
+}
+
+function hidePageTransition(overlay) {
+    if (!overlay) return;
+    
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+        }
+    }, 300);
+}
+
+if (typeof window !== 'undefined') {
+    window.NAVIGATION = {
+        navigateToPage,
+        showPageTransition,
+        hidePageTransition,
+        getCurrentPage: NAVIGATION_CONFIG.getCurrentPage
+    };
 }
 
 /**

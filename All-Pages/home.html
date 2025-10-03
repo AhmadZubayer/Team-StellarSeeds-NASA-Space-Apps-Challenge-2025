@@ -9,6 +9,7 @@
     <!-- Location permissions meta tags -->
     <meta http-equiv="Permissions-Policy" content="geolocation=*">
     <title>GeoGuardian - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <!-- Font Awesome for icons -->
@@ -165,9 +166,12 @@
                 <div id="cityName" class="location-text text-sm mt-1">Loading location...</div>
             </div>
 
-            <!-- Right side: Profile Icon -->
-            <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
-                <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+            <!-- Right side: Alert Bell and Profile Icon -->
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500 transition-colors" onclick="window.location.href='alerts.html'"></i>
+                <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+                </div>
             </div>
         </div>
     </div>
@@ -193,8 +197,8 @@
                 <div class="bg-gray-100 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:bg-gray-200 transition-colors duration-200" onclick="window.open('https://www.google.com/search?q=Dhaka+weather+today', '_blank')">
                     <div>
                         <div class="text-sm text-gray-600 mb-1">Temperature</div>
-                        <div class="text-3xl font-bold text-gray-800">23°C</div>
-                        <div class="text-sm text-gray-600">Light Rain Expected</div>
+                        <div class="text-3xl font-bold text-gray-800">27°C</div>
+                        <div class="text-sm text-gray-600">Cloudy</div>
                     </div>
                     <div class="text-right">
                         <i class="fas fa-cloud-rain text-blue-400 text-4xl"></i>
@@ -205,13 +209,13 @@
             <!-- Alert Section -->
             <div class="mb-6">
                 <div class="flex items-center mb-3">
-                    <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                    <i class="fas fa-exclamation-triangle text-green-500 mr-2"></i>
                     <h3 class="text-lg font-bold text-gray-800">Alert</h3>
                 </div>
-                <div class="bg-red-500 rounded-xl p-4 text-white flex items-center justify-between cursor-pointer hover:bg-red-600 transition-colors duration-200" onclick="window.location.href='alerts.html'">
+                <div class="bg-green-500 rounded-xl p-4 text-white flex items-center justify-between cursor-pointer hover:bg-green-600 transition-colors duration-200" onclick="window.location.href='alerts.html'">
                     <div>
-                        <div class="text-xl font-bold">FLOOD ALERT</div>
-                        <div class="text-sm opacity-90">Expected in 3 Days</div>
+                        <div class="text-xl font-bold"> No Alert</div>
+                        <div class="text-sm">Stay safe and informed.</div>
                     </div>
                     <div>
                         <i class="fas fa-water text-white text-3xl"></i>
@@ -233,8 +237,8 @@
                         <div class="aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-lg mb-3 overflow-hidden">
                             <img src="../Files/aman.jpg" alt="Aman Rice" class="w-full h-full object-cover rounded-lg">
                         </div>
-                        <h4 class="font-bold text-gray-800 text-sm">Aman Rice</h4>
-                        <p class="text-xs text-gray-600">Main monsoon-season rice variety.</p>
+                        <h4 class="font-bold text-gray-800 text-sm">Tuberose Flower</h4>
+                        <p class="text-xs text-gray-600">Thrives in warm climates with well-drained soil and sunlight.</p>
                     </div>
 
                     <!-- Sunflower Card -->
@@ -253,8 +257,8 @@
                 <h3 class="text-lg font-bold text-gray-800 mb-3">Tip of the Day</h3>
                 <div class="bg-green-100 rounded-xl p-4 flex items-center">
                     <div class="flex-1">
-                        <p class="text-green-800 font-medium">Use raised beds to reduce flood damage.</p>
-                        <a href="#" onclick="window.open('https://www.google.com/search?q=raised+beds+flood+damage+prevention+farming', '_blank'); return false;" class="text-green-600 text-sm underline">Learn More</a>
+                        <p class="text-green-800 font-medium">Very high humidity can trigger fungal infections on leaves and buds (especially roses, tuberose, marigold).</p>
+                        <a href="#" onclick="window.open('https:https:'//www.google.com/search?q=Very+high+humidity+(90%25)+can+trigger+fungal+infections+on+leaves+and+buds+(especially+roses%2C+tuberose%2C+marigold).&rlz=1C1KNTJ_enBD1073BD1073&oq=Very+high+humidity+(90%25)+can+trigger+fungal+infections+on+leaves+and+buds+(especially+roses%2C+tuberose%2C+marigold).&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzI4N2owajmoAgCwAgA&sourceid=chrome&ie=UTF-8', '_blank'); return false;" class="text-green-600 text-sm underline">Learn More</a>
                     </div>
                     <div class="ml-4">
                         <i class="fas fa-lightbulb text-green-600 text-2xl"></i>
@@ -265,11 +269,11 @@
             <!-- Quick Stats Grid -->
             <div class="grid grid-cols-2 gap-4 mb-6">
                 <div class="bg-green-50 p-4 rounded-lg cursor-pointer hover:bg-green-100 transition-colors duration-200" onclick="window.open('https://www.google.com/search?q=Dhaka+weather+today', '_blank')">
-                    <div class="text-2xl font-bold text-green-600">25°C</div>
+                    <div class="text-2xl font-bold text-green-600">27°C</div>
                     <div class="text-sm text-gray-600">Temperature</div>
                 </div>
                 <div class="bg-blue-50 p-4 rounded-lg">
-                    <div class="text-2xl font-bold text-blue-600">68%</div>
+                    <div class="text-2xl font-bold text-blue-600">90%</div>
                     <div class="text-sm text-gray-600">Humidity</div>
                 </div>
             </div>
@@ -278,7 +282,7 @@
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <div class="grid grid-cols-6 h-full">
+        <div class="grid grid-cols-5 h-full">
             <!-- Home -->
             <a href="#" class="nav-item active" data-page="home">
                 <i class="fas fa-home"></i>
@@ -310,10 +314,12 @@
             </a>
 
             <!-- Alerts -->
+             <!--
             <a href="#" class="nav-item" data-page="alerts">
                 <i class="fas fa-bell"></i>
                 <span>Alerts</span>
             </a>
+        -->
         </div>
     </nav>
 
@@ -358,9 +364,9 @@
                     </div>
                     <div class="ml-7">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Rice</span>
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Wheat</span>
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Corn</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Rose</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Marigold</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Dahlia</span>
                         </div>
                     </div>
                 </div>
@@ -372,7 +378,7 @@
                         <span class="font-medium">Details:</span>
                     </div>
                     <div class="text-gray-600 text-sm ml-7">
-                        Experienced farmer specializing in sustainable agriculture practices. Member since 2024.
+                       Experienced flower farmer specializing in sustainable agriculture, cultivating seasonal and perennial blooms with eco-friendly practices. Active member of the farming community since 2024.
                     </div>
                 </div>
             </div>

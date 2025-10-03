@@ -1,11 +1,8 @@
-// Crop Calendar JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Crop Calendar loaded and ready');
     
-    // Initialize navigation
     setupNavigation();
     
-    // Initialize calendar functionality
     initializeCalendar();
 });
 
@@ -16,7 +13,6 @@ function setupNavigation() {
         item.addEventListener('click', function(event) {
             const page = this.getAttribute('data-page');
             
-            // Handle navigation based on page
             if (page === 'home') {
                 event.preventDefault();
                 window.location.href = 'home.html';
@@ -27,10 +23,8 @@ function setupNavigation() {
                 event.preventDefault();
                 window.location.href = 'chatAI.html';
             } else if (page === 'calendar') {
-                // Already on calendar page, do nothing
                 event.preventDefault();
             } else {
-                // For other nav items, prevent default
                 event.preventDefault();
                 console.log('Navigation to', page, 'coming soon!');
             }
@@ -39,56 +33,55 @@ function setupNavigation() {
 }
 
 function initializeCalendar() {
-    // Calendar data that can be updated dynamically
     const calendarData = [
         {
-            date: "Sunday, August 31",
-            weather: "Heavy Rain",
+            date: "Saturday, October 4",
+            weather: "🌧 Periods of rain, humid, warm (30°/25°)",
             task: "Avoid Sowing",
             weatherIcon: "fas fa-cloud-rain",
             weatherClass: "rain"
         },
         {
-            date: "Monday, September 1",
-            weather: "Rain",
+            date: "Sunday, October 5",
+            weather: "🌦 Showers, thick cloud cover (31°/25°)",
             task: "Delay Planting",
             weatherIcon: "fas fa-cloud-rain",
             weatherClass: "rain"
         },
         {
-            date: "Tuesday, September 2",
-            weather: "Cloudy",
+            date: "Monday, October 6",
+            weather: "🌧 Morning showers, cloudy later (31°/25°)",
             task: "Prepare Land",
-            weatherIcon: "fas fa-cloud",
-            weatherClass: "cloudy"
-        },
-        {
-            date: "Wednesday, September 3",
-            weather: "Sunny",
-            task: "Good Sowing",
-            weatherIcon: "fas fa-sun",
-            weatherClass: "sunny"
-        },
-        {
-            date: "Thursday, September 4",
-            weather: "Sunny",
-            task: "Irrigate Wheat",
-            weatherIcon: "fas fa-sun",
-            weatherClass: "sunny"
-        },
-        {
-            date: "Friday, September 5",
-            weather: "Cloudy",
-            task: "Study Rice",
-            weatherIcon: "fas fa-cloud",
-            weatherClass: "cloudy"
-        },
-        {
-            date: "Saturday, September 6",
-            weather: "Light Rain",
-            task: "Monitor Crops",
-            weatherIcon: "fas fa-cloud-drizzle",
+            weatherIcon: "fas fa-cloud-rain",
             weatherClass: "rain"
+        },
+        {
+            date: "Tuesday, October 7",
+            weather: "⛅ Mostly cloudy, light afternoon rain (31°/25°)",
+            task: "Monitor Weather",
+            weatherIcon: "fas fa-cloud",
+            weatherClass: "cloudy"
+        },
+        {
+            date: "Wednesday, October 8",
+            weather: "⛅ Mostly cloudy, chance of afternoon showers (31°/25°)",
+            task: "Check Irrigation",
+            weatherIcon: "fas fa-cloud",
+            weatherClass: "cloudy"
+        },
+        {
+            date: "Thursday, October 9",
+            weather: "🌦 Morning showers, light afternoon rain (31°/26°)",
+            task: "Study Rice",
+            weatherIcon: "fas fa-cloud-rain",
+            weatherClass: "rain"
+        },
+        {
+            date: "Friday, October 10",
+            weather: "⛅ Cloudy, possible showers (31°/26°)",
+            task: "Monitor Crops",
+            weatherIcon: "fas fa-cloud",
+            weatherClass: "cloudy"
         }
     ];
     
@@ -107,19 +100,16 @@ function updateCalendarDisplay(data) {
             dateElement.innerText = item.date;
         }
         
-        // Update weather
         const weatherElement = document.getElementById(`weather${itemIndex}`);
         if (weatherElement) {
             weatherElement.innerText = item.weather;
         }
         
-        // Update task
         const taskElement = document.getElementById(`task${itemIndex}`);
         if (taskElement) {
             taskElement.innerText = item.task;
         }
         
-        // Update weather icon
         const iconElement = document.getElementById(`weatherIcon${itemIndex}`);
         if (iconElement) {
             iconElement.className = item.weatherIcon;
@@ -128,7 +118,6 @@ function updateCalendarDisplay(data) {
     });
 }
 
-// Function to update individual calendar item
 function updateCalendarItem(index, date, weather, task, weatherIcon = "fas fa-sun", weatherClass = "sunny") {
     const itemIndex = index + 1;
     
@@ -146,7 +135,6 @@ function updateCalendarItem(index, date, weather, task, weatherIcon = "fas fa-su
     }
 }
 
-// Export functions for external use
 window.CropCalendar = {
     updateCalendarDisplay,
     updateCalendarItem

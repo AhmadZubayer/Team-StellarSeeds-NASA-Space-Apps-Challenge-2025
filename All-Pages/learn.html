@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>GeoGuardian - Learn</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,8 +45,11 @@
 			<div>
 				<h1 class="text-2xl font-bold text-green-600">Learn</h1>
 			</div>
-			<div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
-				<img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+			<div class="flex items-center space-x-3">
+				<i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500 transition-colors" onclick="window.location.href='alerts.html'"></i>
+				<div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+					<img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -93,19 +97,19 @@
 					<a href="#" style="color:#22c55e;font-weight:500;font-size:0.95rem;text-decoration:underline;">View More Categories &gt;</a>
 				</div>
 				<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
-					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Drought Management')">
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Drought management for flowers')">
 						<i class="fas fa-sun" style="font-size:2rem;color:#059669;"></i>
 						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Drought Management</div>
 					</div>
-					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Heavy Rain Management')">
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Heavy Rain Management for flowers')">
 						<i class="fas fa-cloud-showers-heavy" style="font-size:2rem;color:#059669;"></i>
 						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Heavy Rain Management</div>
 					</div>
-					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Soil and Fertility Management')">
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Soil and Fertility Management for flowers')">
 						<i class="fas fa-seedling" style="font-size:2rem;color:#059669;"></i>
 						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Soil & Fertility Management</div>
 					</div>
-					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Water Reservation Techniques')">
+					<div style="background:#a7f3d0;border-radius:16px;padding:24px 0;text-align:center;box-shadow:0 2px 8px rgba(34,197,94,0.08);cursor:pointer;" onclick="searchGoogle('Water Reservation Techniques for flowers	')">
 						<i class="fas fa-tint" style="font-size:2rem;color:#059669;"></i>
 						<div style="font-size:1.05rem;font-weight:600;margin-top:10px;">Water Reservation Techniques</div>
 					</div>
@@ -115,7 +119,7 @@
 	</div>
 	<!-- Mobile Navigation Bar -->
 	<nav class="mobile-nav">
-		<div class="grid grid-cols-6 h-full">
+		<div class="grid grid-cols-5 h-full">
 			<a href="home.html" class="nav-item" data-page="home">
 				<i class="fas fa-home"></i>
 				<span>Home</span>
@@ -136,10 +140,12 @@
 				<i class="fas fa-store"></i>
 				<span>Sell</span>
 			</a>
+			<!--
 			<a href="alerts.html" class="nav-item" data-page="alerts">
 				<i class="fas fa-bell"></i>
 				<span>Alerts</span>
 			</a>
+		-->
 		</div>
 	</nav>
 	<!-- Profile Popup Menu -->
@@ -201,7 +207,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- Quiz JS, Popup, and Google Search -->
 	<style>
 		.quiz-popup-bg { position: fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; display:none; align-items:center; justify-content:center; }
 		.quiz-popup { background:white; border-radius:16px; box-shadow:0 2px 24px rgba(34,197,94,0.15); padding:32px 24px; max-width:350px; width:90vw; }
@@ -247,11 +252,9 @@
 			window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
 		}
 	</script>
-	<!-- Centralized Navigation System -->
 	<script src="navigation.js"></script>
 	<script src="learn.js"></script>
 	<script>
-		// Remove old navigation override since we have centralized navigation
 		document.addEventListener('DOMContentLoaded', function() {
 			console.log('Learn page loaded with centralized navigation');
 		});

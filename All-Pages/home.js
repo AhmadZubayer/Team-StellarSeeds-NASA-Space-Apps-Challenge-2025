@@ -1,29 +1,22 @@
-// home.js - DOM manipulation for home page
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Home.js loaded and ready');
 
-    // Initialize the home page
     initializeHomePage();
 });
 
 function initializeHomePage() {
-    // Set the user name using DOM manipulation
     setUserName();
 
-    // Load and display city name from location data
     loadCityName();
 
-    // Add navigation functionality
     setupNavigation();
 
-    // Add profile icon interaction
     setupProfileInteraction();
 }
 
 function setUserName() {
     const userNameElement = document.getElementById('userName');
     if (userNameElement) {
-        // Set the name using innerText as requested
         userNameElement.innerText = 'Shihab Chashi';
         console.log('User name set to: Shihab Chashi');
     } else {
@@ -38,7 +31,6 @@ function loadCityName() {
         return;
     }
 
-    // Try to get location data from localStorage first
     const locationData = localStorage.getItem('geoguardian_location');
 
     if (locationData) {
@@ -52,7 +44,6 @@ function loadCityName() {
         }
     }
 
-    // If no stored location, try to get current location (mobile-friendly)
     console.log('No stored location, attempting to get current location...');
     getCurrentLocationMobile();
 }
@@ -60,7 +51,6 @@ function loadCityName() {
 function getCurrentLocationMobile() {
     const cityNameElement = document.getElementById('cityName');
     
-    // Check if geolocation is supported
     if (!navigator.geolocation) {
         console.error('Geolocation not supported');
         cityNameElement.innerText = 'Location not supported';
@@ -69,11 +59,10 @@ function getCurrentLocationMobile() {
 
     cityNameElement.innerText = 'Getting location...';
 
-    // Mobile-optimized geolocation options
     const options = {
         enableHighAccuracy: true,
-        timeout: 15000, // 15 seconds timeout
-        maximumAge: 300000 // Accept cached location up to 5 minutes old
+        timeout: 15000,
+        maximumAge: 300000
     };
 
     navigator.geolocation.getCurrentPosition(
@@ -83,14 +72,12 @@ function getCurrentLocationMobile() {
             
             console.log('Location obtained:', { latitude, longitude });
             
-            // Store location for future use
             localStorage.setItem('geoguardian_location', JSON.stringify({
                 latitude: latitude,
                 longitude: longitude,
                 timestamp: Date.now()
             }));
             
-            // Get city name
             getCityFromCoordinates(latitude, longitude);
         },
         function(error) {
@@ -160,7 +147,6 @@ async function getCityFromCoordinates(lat, lng) {
         const data = await response.json();
 
         if (data && data.address) {
-            // Extract city name with better fallbacks
             const city = data.address.city ||
                         data.address.town ||
                         data.address.village ||
@@ -173,10 +159,8 @@ async function getCityFromCoordinates(lat, lng) {
             cityNameElement.innerText = `📍 ${city}`;
             console.log('City name set to:', city);
             
-            // Store the city name for offline use
             localStorage.setItem('geoguardian_last_city', city);
         } else {
-            // Try to use last known city
             const lastCity = localStorage.getItem('geoguardian_last_city');
             if (lastCity) {
                 cityNameElement.innerText = `📍 ${lastCity}`;
@@ -187,7 +171,6 @@ async function getCityFromCoordinates(lat, lng) {
     } catch (error) {
         console.error('Error getting city name:', error);
         
-        // Try to use last known city
         const lastCity = localStorage.getItem('geoguardian_last_city');
         if (lastCity) {
             cityNameElement.innerText = `📍 ${lastCity}`;
@@ -207,10 +190,8 @@ function setupNavigation() {
             const page = this.getAttribute('data-page');
             console.log('Navigation clicked:', page);
 
-            // Remove active class from all nav items
             navItems.forEach(nav => nav.classList.remove('active'));
 
-            // Add active class to clicked item
             this.classList.add('active');
 
             // Handle navigation based on page
@@ -246,7 +227,6 @@ function handleNavigation(page) {
             showMessage('Marketplace coming soon!', 'info');
             break;
         case 'alerts':
-            // Navigate to alerts section/page
             showMessage('Alerts coming soon!', 'info');
             break;
         default:
@@ -265,17 +245,14 @@ function setupProfileInteraction() {
         profileIcon.addEventListener('click', function() {
             console.log('Profile icon clicked');
 
-            // Add click animation
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 150);
 
-            // Show profile popup
             showProfilePopup();
         });
 
-        // Add hover effect
         profileIcon.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.05)';
             this.style.transition = 'transform 0.2s ease';
@@ -286,14 +263,12 @@ function setupProfileInteraction() {
         });
     }
 
-    // Close popup button
     if (closePopupBtn) {
         closePopupBtn.addEventListener('click', function() {
             hideProfilePopup();
         });
     }
 
-    // Edit profile button
     if (editProfileBtn) {
         editProfileBtn.addEventListener('click', function() {
             console.log('Edit profile clicked');
@@ -324,25 +299,20 @@ function setupProfileInteraction() {
     }
 }
 
-// Function to show profile popup
 function showProfilePopup() {
     const profilePopup = document.getElementById('profilePopup');
     const popupUserName = document.getElementById('popupUserName');
     const popupCityName = document.getElementById('popupCityName');
 
     if (profilePopup) {
-        // Update popup with current user data
         if (popupUserName) {
             popupUserName.innerText = 'Shihab Chashi';
         }
 
-        // Update location in popup
         updatePopupLocation();
 
-        // Show popup
         profilePopup.classList.remove('hidden');
 
-        // Trigger animation after a brief delay
         setTimeout(() => {
             profilePopup.classList.add('show');
         }, 10);
@@ -351,14 +321,12 @@ function showProfilePopup() {
     }
 }
 
-// Function to hide profile popup
 function hideProfilePopup() {
     const profilePopup = document.getElementById('profilePopup');
 
     if (profilePopup) {
         profilePopup.classList.remove('show');
 
-        // Hide popup after animation completes
         setTimeout(() => {
             profilePopup.classList.add('hidden');
         }, 300);
@@ -367,7 +335,6 @@ function hideProfilePopup() {
     }
 }
 
-// Function to update location in popup
 function updatePopupLocation() {
     const popupCityName = document.getElementById('popupCityName');
     const headerCityName = document.getElementById('cityName');
@@ -383,39 +350,31 @@ function updatePopupLocation() {
     }
 }
 
-// Function to handle logout
 function handleLogout() {
     console.log('Logging out user...');
 
-    // Clear stored data
     localStorage.removeItem('geoguardian_location');
     localStorage.removeItem('userSession');
 
-    // Show logout message
     showMessage('Logging out...', 'success');
 
-    // Redirect to register page after delay
     setTimeout(() => {
         window.location.href = 'register.html';
     }, 1500);
 }
 
-// Utility function to show messages
 function showMessage(message, type = 'info') {
-    // Create and show temporary message
     const messageDiv = document.createElement('div');
     messageDiv.className = `alert alert-${type} fixed top-20 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 max-w-sm`;
     messageDiv.textContent = message;
 
     document.body.appendChild(messageDiv);
 
-    // Animate in
     setTimeout(() => {
         messageDiv.style.opacity = '1';
         messageDiv.style.transform = 'translate(-50%, 0)';
     }, 100);
 
-    // Remove after delay
     setTimeout(() => {
         messageDiv.style.opacity = '0';
         messageDiv.style.transform = 'translate(-50%, -20px)';
@@ -427,13 +386,11 @@ function showMessage(message, type = 'info') {
     }, 3000);
 }
 
-// Function to refresh location data
 function refreshLocation() {
     console.log('Refreshing location data...');
     loadCityName();
 }
 
-// Export functions for potential use in other scripts
 window.HomePageManager = {
     setUserName,
     loadCityName,

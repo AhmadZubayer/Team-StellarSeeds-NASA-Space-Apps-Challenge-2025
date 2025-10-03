@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoGuardian - Crop Calendar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -154,9 +155,12 @@
                 <h1 class="text-xl font-bold text-gray-800">Crop Calendar</h1>
             </div>
 
-            <!-- Right side: Profile Icon -->
-            <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
-                <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+            <!-- Right side: Alert Bell and Profile Icon -->
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500 transition-colors" onclick="window.location.href='alerts.html'"></i>
+                <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+                </div>
             </div>
         </div>
     </div>
@@ -176,11 +180,11 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="calendar-container">
-            <!-- Calendar Item: Sunday, August 31 -->
+            <!-- Calendar Item: Saturday, October 4 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date1">Sunday, August 31</div>
-                    <div class="calendar-weather" id="weather1">Heavy Rain</div>
+                    <div class="calendar-date" id="date1">Saturday, October 4</div>
+                    <div class="calendar-weather" id="weather1">🌧 Periods of rain, humid, warm (30°/25°)</div>
                     <div class="calendar-task" id="task1">Avoid Sowing</div>
                 </div>
                 <div class="weather-icon rain">
@@ -188,11 +192,11 @@
                 </div>
             </div>
 
-            <!-- Calendar Item: Monday, September 1 -->
+            <!-- Calendar Item: Sunday, October 5 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date2">Monday, September 1</div>
-                    <div class="calendar-weather" id="weather2">Rain</div>
+                    <div class="calendar-date" id="date2">Sunday, October 5</div>
+                    <div class="calendar-weather" id="weather2">🌦 Showers, thick cloud cover (31°/25°)</div>
                     <div class="calendar-task" id="task2">Delay Planting</div>
                 </div>
                 <div class="weather-icon rain">
@@ -200,63 +204,63 @@
                 </div>
             </div>
 
-            <!-- Calendar Item: Tuesday, September 2 -->
+            <!-- Calendar Item: Monday, October 6 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date3">Tuesday, September 2</div>
-                    <div class="calendar-weather" id="weather3">Cloudy</div>
+                    <div class="calendar-date" id="date3">Monday, October 6</div>
+                    <div class="calendar-weather" id="weather3">🌧 Morning showers, cloudy later (31°/25°)</div>
                     <div class="calendar-task" id="task3">Prepare Land</div>
                 </div>
+                <div class="weather-icon rain">
+                    <i class="fas fa-cloud-rain" id="weatherIcon3"></i>
+                </div>
+            </div>
+
+            <!-- Calendar Item: Tuesday, October 7 -->
+            <div class="calendar-item">
+                <div class="calendar-item-content">
+                    <div class="calendar-date" id="date4">Tuesday, October 7</div>
+                    <div class="calendar-weather" id="weather4">⛅ Mostly cloudy, light afternoon rain (31°/25°)</div>
+                    <div class="calendar-task" id="task4">Monitor Weather</div>
+                </div>
                 <div class="weather-icon cloudy">
-                    <i class="fas fa-cloud" id="weatherIcon3"></i>
+                    <i class="fas fa-cloud" id="weatherIcon4"></i>
                 </div>
             </div>
 
-            <!-- Calendar Item: Wednesday, September 3 -->
+            <!-- Calendar Item: Wednesday, October 8 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date4">Wednesday, September 3</div>
-                    <div class="calendar-weather" id="weather4">Sunny</div>
-                    <div class="calendar-task" id="task4">Good Sowing</div>
+                    <div class="calendar-date" id="date5">Wednesday, October 8</div>
+                    <div class="calendar-weather" id="weather5">⛅ Mostly cloudy, chance of afternoon showers (31°/25°)</div>
+                    <div class="calendar-task" id="task5">Check Irrigation</div>
                 </div>
-                <div class="weather-icon sunny">
-                    <i class="fas fa-sun" id="weatherIcon4"></i>
+                <div class="weather-icon cloudy">
+                    <i class="fas fa-cloud" id="weatherIcon5"></i>
                 </div>
             </div>
 
-            <!-- Calendar Item: Thursday, September 4 -->
+            <!-- Calendar Item: Thursday, October 9 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date5">Thursday, September 4</div>
-                    <div class="calendar-weather" id="weather5">Sunny</div>
-                    <div class="calendar-task" id="task5">Irrigate Wheat</div>
-                </div>
-                <div class="weather-icon sunny">
-                    <i class="fas fa-sun" id="weatherIcon5"></i>
-                </div>
-            </div>
-
-            <!-- Calendar Item: Friday, September 5 -->
-            <div class="calendar-item">
-                <div class="calendar-item-content">
-                    <div class="calendar-date" id="date6">Friday, September 5</div>
-                    <div class="calendar-weather" id="weather6">Cloudy</div>
+                    <div class="calendar-date" id="date6">Thursday, October 9</div>
+                    <div class="calendar-weather" id="weather6">🌦 Morning showers, light afternoon rain (31°/26°)</div>
                     <div class="calendar-task" id="task6">Study Rice</div>
                 </div>
-                <div class="weather-icon cloudy">
-                    <i class="fas fa-cloud" id="weatherIcon6"></i>
+                <div class="weather-icon rain">
+                    <i class="fas fa-cloud-rain" id="weatherIcon6"></i>
                 </div>
             </div>
 
-            <!-- Calendar Item: Saturday, September 6 -->
+            <!-- Calendar Item: Friday, October 10 -->
             <div class="calendar-item">
                 <div class="calendar-item-content">
-                    <div class="calendar-date" id="date7">Saturday, September 6</div>
-                    <div class="calendar-weather" id="weather7">Light Rain</div>
+                    <div class="calendar-date" id="date7">Friday, October 10</div>
+                    <div class="calendar-weather" id="weather7">⛅ Cloudy, possible showers (31°/26°)</div>
                     <div class="calendar-task" id="task7">Monitor Crops</div>
                 </div>
-                <div class="weather-icon rain">
-                    <i class="fas fa-cloud-drizzle" id="weatherIcon7"></i>
+                <div class="weather-icon cloudy">
+                    <i class="fas fa-cloud" id="weatherIcon7"></i>
                 </div>
             </div>
         </div>
@@ -264,7 +268,7 @@
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <div class="grid grid-cols-6 h-full">
+        <div class="grid grid-cols-5 h-full">
             <!-- Home -->
             <a href="home.html" class="nav-item" data-page="home">
                 <i class="fas fa-home"></i>
@@ -296,10 +300,12 @@
             </a>
 
             <!-- Alerts -->
+             <!--
             <a href="#" class="nav-item" data-page="alerts">
                 <i class="fas fa-bell"></i>
                 <span>Alerts</span>
             </a>
+        -->
         </div>
     </nav>
 

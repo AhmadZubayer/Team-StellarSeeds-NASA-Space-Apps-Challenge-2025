@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoGuardian - Alerts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -273,9 +274,12 @@
                 <h1 class="text-xl font-bold text-gray-800">Alerts</h1>
             </div>
 
-            <!-- Right side: Profile Icon -->
-            <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
-                <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+            <!-- Right side: Alert Bell and Profile Icon -->
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500 transition-colors"></i>
+                    <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+                </div>
             </div>
         </div>
     </div>
@@ -368,7 +372,7 @@
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <div class="grid grid-cols-6 h-full">
+        <div class="grid grid-cols-5 h-full">
             <!-- Home -->
             <a href="home.html" class="nav-item" data-page="home">
                 <i class="fas fa-home"></i>
@@ -400,10 +404,12 @@
             </a>
 
             <!-- Alerts -->
+             <!--
             <a href="alerts.html" class="nav-item active" data-page="alerts">
                 <i class="fas fa-bell"></i>
                 <span>Alerts</span>
             </a>
+        -->
         </div>
     </nav>
 

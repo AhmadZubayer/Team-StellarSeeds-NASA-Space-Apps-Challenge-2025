@@ -1,11 +1,8 @@
-// Alerts Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Alerts page loaded and ready');
     
-    // Initialize navigation
     setupNavigation();
     
-    // Initialize alerts page functionality
     initializeAlertsPage();
 });
 
@@ -16,7 +13,6 @@ function setupNavigation() {
         item.addEventListener('click', function(event) {
             const page = this.getAttribute('data-page');
             
-            // Handle navigation based on page
             if (page === 'home') {
                 event.preventDefault();
                 window.location.href = 'home.html';
@@ -33,10 +29,8 @@ function setupNavigation() {
                 event.preventDefault();
                 window.location.href = 'sell.html';
             } else if (page === 'alerts') {
-                // Already on alerts page, do nothing
                 event.preventDefault();
             } else {
-                // For other nav items, prevent default
                 event.preventDefault();
                 console.log('Navigation to', page, 'coming soon!');
             }
@@ -45,12 +39,10 @@ function setupNavigation() {
 }
 
 function initializeAlertsPage() {
-    // Initialize modal close events
     setupModalEvents();
     console.log('Alerts page initialized');
 }
 
-// Alert details data
 const alertDetails = {
     flood: {
         title: 'Flood Alert!',
@@ -231,19 +223,16 @@ function showAlertModal(alertType) {
     console.log(`Opened alert modal: ${alertType}`);
 }
 
-// Function to close alert modal
 function closeAlertModal() {
     const modal = document.getElementById('alertModal');
     modal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
+    document.body.style.overflow = 'auto';
     console.log('Closed alert modal');
 }
 
-// Setup modal events
 function setupModalEvents() {
     const modal = document.getElementById('alertModal');
     
-    // Close modal when clicking outside
     if (modal) {
         modal.addEventListener('click', function(event) {
             if (event.target === modal) {
@@ -252,7 +241,6 @@ function setupModalEvents() {
         });
     }
     
-    // Close modal with Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeAlertModal();
@@ -260,7 +248,6 @@ function setupModalEvents() {
     });
 }
 
-// Function to add new alert
 function addAlert(type, title, description, icon = 'fas fa-bell') {
     const alertsList = document.querySelector('.alerts-list');
     
@@ -278,11 +265,9 @@ function addAlert(type, title, description, icon = 'fas fa-bell') {
         </div>
     `;
     
-    // Add to top of list
     alertsList.insertBefore(alertCard, alertsList.firstChild);
 }
 
-// Function to remove alert
 function removeAlert(index) {
     const alertCards = document.querySelectorAll('.alert-card');
     if (alertCards[index]) {
@@ -290,7 +275,6 @@ function removeAlert(index) {
     }
 }
 
-// Export functions for external use
 window.AlertsPage = {
     showAlertModal,
     closeAlertModal,

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoGuardian - Sell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -388,9 +389,12 @@
                 <h1 class="text-xl font-bold text-gray-800">Sell Your Crops</h1>
             </div>
 
-            <!-- Right side: Profile Icon -->
-            <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
-                <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+            <!-- Right side: Alert Bell and Profile Icon -->
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500 transition-colors" onclick="window.location.href='alerts.html'"></i>
+                <div class="profile-icon w-12 h-12 rounded-full flex items-center justify-center overflow-hidden">
+                    <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover rounded-full">
+                </div>
             </div>
         </div>
     </div>
@@ -421,12 +425,12 @@
                 <!-- Crop Card 1 -->
                 <div class="crop-card">
                     <div class="crop-image">
-                        <i class="fas fa-seedling text-green-500 text-2xl"></i>
+                        <img src="https://thumbs.dreamstime.com/b/rose-seller-howrah-flower-market-photo-has-been-clicked-mullick-ghat-flower-market-rose-seller-howrah-flower-market-249844138.jpg" alt="Red Rose" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div class="crop-info">
-                        <div class="crop-name">Premium Rice</div>
-                        <div class="crop-price">৳45/kg</div>
-                        <div class="seller-info">Farmer Rahman • Sylhet</div>
+                        <div class="crop-name">Red Rose</div>
+                        <div class="crop-price">৳700/100 pieces</div>
+                        <div class="seller-info">Farmer Rahman • Jessore</div>
                     </div>
                     <button class="contact-btn" onclick="contactSeller('Rahman')">Contact</button>
                 </div>
@@ -434,11 +438,11 @@
                 <!-- Crop Card 2 -->
                 <div class="crop-card">
                     <div class="crop-image">
-                        <i class="fas fa-corn text-yellow-500 text-2xl"></i>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOMFcAHJ5UFO--Ud2XKj_yd641804rPvWKsg&s" alt="Hasnahena" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div class="crop-info">
-                        <div class="crop-name">Sweet Corn</div>
-                        <div class="crop-price">৳35/kg</div>
+                        <div class="crop-name">Hasnahena</div>
+                        <div class="crop-price">৳2500/kg</div>
                         <div class="seller-info">Farmer Ali • Rangpur</div>
                     </div>
                     <button class="contact-btn" onclick="contactSeller('Ali')">Contact</button>
@@ -447,11 +451,11 @@
                 <!-- Crop Card 3 -->
                 <div class="crop-card">
                     <div class="crop-image">
-                        <i class="fas fa-carrot text-orange-500 text-2xl"></i>
+                        <img src="https://images.unsplash.com/photo-1599369553272-29f89a9d4696?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3VuZmxvd2Vyc3xlbnwwfHwwfHx8MA%3D%3D" alt="Sunflower" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div class="crop-info">
-                        <div class="crop-name">Fresh Vegetables</div>
-                        <div class="crop-price">৳25/kg</div>
+                        <div class="crop-name">Sunflower</div>
+                        <div class="crop-price">৳2450/kg</div>
                         <div class="seller-info">Farmer Fatima • Chittagong</div>
                     </div>
                     <button class="contact-btn" onclick="contactSeller('Fatima')">Contact</button>
@@ -460,11 +464,11 @@
                 <!-- Crop Card 4 -->
                 <div class="crop-card">
                     <div class="crop-image">
-                        <i class="fas fa-apple-alt text-red-500 text-2xl"></i>
+                        <img src="https://www.saharanpurnursery.in/cdn/shop/files/1_22de627a-485d-4e10-a677-b12b46a24883_700x700.jpg?v=1718611145" alt="Hibiscus" class="w-full h-full object-cover rounded-lg">
                     </div>
                     <div class="crop-info">
-                        <div class="crop-name">Organic Fruits</div>
-                        <div class="crop-price">ৃ60/kg</div>
+                        <div class="crop-name">Hibiscus</div>
+                        <div class="crop-price">৳150/100 pieces</div>
                         <div class="seller-info">Farmer Hassan • Dhaka</div>
                     </div>
                     <button class="contact-btn" onclick="contactSeller('Hassan')">Contact</button>
@@ -496,7 +500,7 @@
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <div class="grid grid-cols-6 h-full">
+        <div class="grid grid-cols-5 h-full">
             <!-- Home -->
             <a href="home.html" class="nav-item" data-page="home">
                 <i class="fas fa-home"></i>
@@ -528,10 +532,12 @@
             </a>
 
             <!-- Alerts -->
+             <!--
             <a href="#" class="nav-item" data-page="alerts">
                 <i class="fas fa-bell"></i>
                 <span>Alerts</span>
             </a>
+        -->
         </div>
     </nav>
 

@@ -1,11 +1,8 @@
-// Sell Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Sell page loaded and ready');
     
-    // Initialize navigation
     setupNavigation();
     
-    // Initialize sell page functionality
     initializeSellPage();
 });
 
@@ -16,7 +13,6 @@ function setupNavigation() {
         item.addEventListener('click', function(event) {
             const page = this.getAttribute('data-page');
             
-            // Handle navigation based on page
             if (page === 'home') {
                 event.preventDefault();
                 window.location.href = 'home.html';
@@ -30,10 +26,8 @@ function setupNavigation() {
                 event.preventDefault();
                 window.location.href = 'crop-calendar.html';
             } else if (page === 'sell') {
-                // Already on sell page, do nothing
                 event.preventDefault();
             } else {
-                // For other nav items, prevent default
                 event.preventDefault();
                 console.log('Navigation to', page, 'coming soon!');
             }
@@ -42,14 +36,11 @@ function setupNavigation() {
 }
 
 function initializeSellPage() {
-    // Add any initialization logic here
     console.log('Sell page initialized');
     
-    // Initialize price chart
     initializePriceChart();
 }
 
-// Initialize Chart.js price trends chart
 function initializePriceChart() {
     const ctx = document.getElementById('priceChart').getContext('2d');
     
@@ -58,7 +49,7 @@ function initializePriceChart() {
         data: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             datasets: [{
-                label: 'Rice Price (৳/kg)',
+                label: 'Rose Price (৳/100 pieces)',
                 data: [42, 45, 44, 47, 49, 48, 52],
                 borderColor: '#22c55e',
                 backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -70,7 +61,7 @@ function initializePriceChart() {
                 pointBorderWidth: 2,
                 pointRadius: 5
             }, {
-                label: 'Wheat Price (৳/kg)',
+                label: ' Sunflower (৳/kg)',
                 data: [35, 36, 38, 37, 39, 40, 42],
                 borderColor: '#f59e0b',
                 backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -136,50 +127,41 @@ function initializePriceChart() {
             }
         }
     });
-    
-    // Store chart instance for later updates
     window.priceChart = priceChart;
 }
 
-// Function to handle post crop button
 function postCrop() {
-    // Show the post crop popup
     const popup = document.getElementById('postCropPopup');
     if (popup) {
         popup.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }
     console.log('Post Crop popup opened');
 }
 
-// Function to close post crop popup
 function closePostCropPopup() {
     const popup = document.getElementById('postCropPopup');
     if (popup) {
         popup.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.style.overflow = 'auto';
     }
     console.log('Post Crop popup closed');
 }
 
-// Function to handle form submission
 function submitCropPost(event) {
     event.preventDefault();
     
-    // Get form values
     const cropName = document.getElementById('cropName').value;
     const cropDetails = document.getElementById('cropDetails').value;
     const cropQuantity = document.getElementById('cropQuantity').value;
     const cropPrice = document.getElementById('cropPrice').value;
     const cropImages = document.getElementById('cropImages').files;
     
-    // Basic validation
     if (!cropName || !cropDetails || !cropQuantity || !cropPrice) {
         alert('Please fill in all required fields');
         return;
     }
     
-    // Create crop data object
     const cropData = {
         name: cropName,
         details: cropDetails,
@@ -191,22 +173,16 @@ function submitCropPost(event) {
     
     console.log('Crop data submitted:', cropData);
     
-    // Show success message
     alert('Crop posted successfully! Your listing will be reviewed and published soon.');
     
-    // Reset form
     document.getElementById('postCropForm').reset();
     
-    // Close popup
     closePostCropPopup();
     
-    // Optionally add the new crop to the marketplace feed
     addNewCropToFeed(cropData);
 }
 
-// Function to add newly posted crop to the feed
 function addNewCropToFeed(cropData) {
-    // Add the new crop at the top of the marketplace feed
     addCropCard(
         cropData.name,
         cropData.price,
@@ -322,7 +298,6 @@ function addCropToChart(cropName, priceData, color = '#22c55e') {
     }
 }
 
-// Function to update smart recommendations
 function updateSmartRecommendations(recommendation1, recommendation2, recommendation3) {
     const recommendationsText = document.querySelector('.recommendations-text');
     if (recommendationsText) {
@@ -334,7 +309,6 @@ function updateSmartRecommendations(recommendation1, recommendation2, recommenda
     }
 }
 
-// Export functions for external use
 window.SellPage = {
     updateCropCard,
     addCropCard,

@@ -4,18 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoGuardian - Chat AI</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8f9fa; min-height: 100vh; padding-bottom: 80px; }
-        .chat-container { max-width: 500px; margin: 40px auto 0 auto; background: white; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); padding: 24px; }
-        .chat-messages { max-height: 340px; overflow-y: auto; margin-bottom: 18px; }
-        .chat-input-row { display: flex; gap: 8px; }
-        .chat-input { flex: 1; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            padding-bottom: 180px; /* Space for input and nav */
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 160px);
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* User's chat bubble */
+        .chat-end {
+            display: flex;
+            justify-content: flex-end;
+            margin-left: auto;
+            max-width: 75%;
+        }
+
+        .chat-bubble {
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+            background-color: #25D366;
+            color: white;
+            border-top-right-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
         
-        /* Mobile Navigation Bar */
+        /* AI Response (formatted text, not a bubble) */
+        .ai-response-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            max-width: 100%;
+        }
+        .ai-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 9999px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .ai-avatar i {
+            color: #4b5563;
+        }
+        .ai-text-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            padding-top: 5px;
+            color: #1f2937;
+        }
+        .ai-text-content ul, .ai-text-content ol {
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+            list-style-position: outside;
+        }
+        .ai-text-content li {
+            margin-bottom: 0.5rem;
+        }
+        .ai-text-content strong, .ai-text-content b {
+            font-weight: 600;
+        }
+        .ai-text-content p:not(:last-child) {
+            margin-bottom: 0.75rem;
+        }
+
+        /* New Input Wrapper and Form */
+        .chat-input-area {
+            position: fixed;
+            bottom: 80px; /* Above mobile nav */
+            left: 0;
+            right: 0;
+            padding: 10px 20px;
+            background-color: #f0f2f5; 
+            z-index: 999;
+        }
+
+        #chatForm {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 9999px;
+            padding: 8px 20px 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: #1f2937;
+            margin-left: 12px;
+        }
+        .chat-input::placeholder {
+            color: #9ca3af;
+        }
+
+        /* Button styling */
+        .mic-btn, .image-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+        }
+
+        .mic-btn:hover, .image-btn:hover {
+            background: linear-gradient(135deg, #5b21b6, #6366f1);
+            transform: scale(1.05);
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            transform: scale(1.05);
+        }
+
+        /* Mobile Nav */
         .mobile-nav {
             position: fixed;
             bottom: 0;
@@ -28,119 +184,90 @@
             z-index: 1000;
             padding: 12px 0 8px 0;
         }
-
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: #22c55e;
-            text-decoration: none;
             transition: all 0.3s ease;
             padding: 8px 4px;
-            border-radius: 12px;
-            min-height: 60px;
         }
-
-        .nav-item:hover {
-            background: rgba(34, 197, 94, 0.1);
-            transform: translateY(-2px);
-        }
-
         .nav-item.active {
-            background: rgba(34, 197, 94, 0.2);
+            color: #16a34a;
             transform: translateY(-2px);
         }
-
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-
-        .nav-item span {
-            font-size: 12px;
-            font-weight: 500;
-        }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item span { font-size: 12px; font-weight: 500; }
     </style>
 </head>
 <body>
-    <div class="chat-container" style="margin-top:0;">
-        <h2 class="text-xl font-bold mb-4 text-green-700">GeoGuardian Chat AI</h2>
-        <div id="chatMessages" class="chat-messages daisyui-chat daisyui-chat-start"></div>
+    <!-- Top Header Section -->
+    <div class="bg-white border-b border-gray-200 p-4">
+        <div class="flex items-center justify-between max-w-500px mx-auto">
+            <h1 class="text-xl font-bold text-gray-800">Chat AI</h1>
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-bell text-gray-600 text-xl cursor-pointer hover:text-green-500" onclick="window.location.href='alerts.html'"></i>
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-100">
+                    <img src="../Files/shihab.jpg" alt="Profile" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div id="chatMessages" class="chat-messages">
+            <!-- Messages will be injected here -->
+        </div>
     </div>
     
-    <!-- Suggestions Section - Positioned above text input -->
-    <div id="suggestions" class="suggestions-container" style="position:fixed;bottom:140px;left:0;right:0;max-width:500px;margin:auto;background:white;padding:12px 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;z-index:999;">
+    <!-- Suggestions Section -->
+    <div id="suggestions" class="px-5" style="position: fixed; bottom: 160px; left: 0; right: 0; max-width: 840px; margin: auto; z-index: 998;">
         <div class="flex items-center mb-2">
-            <i class="fas fa-lightbulb text-green-600 mr-2"></i>
-            <span class="text-sm font-medium text-green-700">Suggested Questions</span>
+            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+            <span class="text-sm font-medium text-gray-600">Suggestions</span>
         </div>
         <div class="flex flex-wrap gap-2">
-            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to protect crops from flood">
-                🌊 Protect crops from flood
+            <button class="suggestion-btn bg-white hover:bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-full border border-gray-300" data-question="What's the 10-day weather forecast?">
+                🌦️ 10-day forecast
             </button>
-            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to improve soil fertility">
-                🌱 Improve soil fertility
+            <button class="suggestion-btn bg-white hover:bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-full border border-gray-300" data-question="What are the best crops to cultivate now?">
+                🌱 Best crops now
             </button>
-            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to save water in farming">
-                💧 Save water in farming
-            </button>
-            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to manage drought">
-                ☀️ Manage drought
-            </button>
-            <button class="suggestion-btn bg-green-50 hover:bg-green-100 text-green-700 text-xs px-3 py-2 rounded-full border border-green-300 transition-all duration-200 hover:shadow-md" data-question="how to prevent crop diseases">
-                🦠 Prevent crop diseases
+            <button class="suggestion-btn bg-white hover:bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-full border border-gray-300" data-question="Farming actions for the heatwave on Day 5?">
+                ☀️ Actions for heatwave
             </button>
         </div>
     </div>
     
-    <!-- Mobile Navigation Bar (at bottom like home/learn pages) -->
+    <!-- New Chat Input Area -->
+    <div class="chat-input-area">
+        <form id="chatForm">
+            <button id="micButton" type="button" class="mic-btn" title="Voice input">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button id="imageButton" type="button" class="image-btn" title="Upload image">
+                <i class="fa-solid fa-image"></i>
+            </button>
+            <input id="chatInput" type="text" class="chat-input" placeholder="Type your message..." autocomplete="off" />
+            <button type="submit" class="send-btn" title="Send message">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Mobile Navigation -->
     <nav class="mobile-nav">
-        <div class="grid grid-cols-6 h-full">
-            <!-- Home -->
-            <a href="home.html" class="nav-item" data-page="home">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-
-            <!-- Learn -->
-            <a href="learn.html" class="nav-item" data-page="learn">
-                <i class="fas fa-book"></i>
-                <span>Learn</span>
-            </a>
-
-            <!-- Chat AI -->
-            <a href="chatAI.html" class="nav-item active" data-page="chat">
-                <i class="fas fa-robot"></i>
-                <span>Chat AI</span>
-            </a>
-
-            <!-- Calendar -->
-            <a href="#" class="nav-item" data-page="calendar">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Calendar</span>
-            </a>
-
-            <!-- Sell -->
-            <a href="#" class="nav-item" data-page="sell">
-                <i class="fas fa-store"></i>
-                <span>Sell</span>
-            </a>
-
-            <!-- Alerts -->
-            <a href="#" class="nav-item" data-page="alerts">
-                <i class="fas fa-bell"></i>
-                <span>Alerts</span>
-            </a>
+        <div class="grid grid-cols-5 h-full">
+            <a href="home.html" class="nav-item" data-page="home"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="learn.html" class="nav-item" data-page="learn"><i class="fas fa-book"></i><span>Learn</span></a>
+            <a href="chatAI.html" class="nav-item active" data-page="chat"><i class="fas fa-robot"></i><span>Chat AI</span></a>
+            <a href="crop-calendar.html" class="nav-item" data-page="calendar"><i class="fas fa-calendar-alt"></i><span>Calendar</span></a>
+            <a href="sell.html" class="nav-item" data-page="sell"><i class="fas fa-store"></i><span>Sell</span></a>
         </div>
     </nav>
     
-    <!-- Input bar at bottom (above navigation) -->
-    <form id="chatForm" class="chat-input-row" style="position:fixed;bottom:80px;left:0;right:0;max-width:500px;margin:auto;background:white;padding:12px 24px;border-top:1px solid #e5e7eb;z-index:999;">
-        <input id="chatInput" type="text" class="input input-bordered chat-input" placeholder="Type your question..." autocomplete="off" />
-        <button type="submit" class="btn btn-success">Send</button>
-    </form>
-    <!-- Centralized Navigation System -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="navigation.js"></script>
     <script src="chatAI.js"></script>
 </body>
